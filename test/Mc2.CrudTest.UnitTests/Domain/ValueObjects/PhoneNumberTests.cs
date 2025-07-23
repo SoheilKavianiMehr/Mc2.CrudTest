@@ -1,5 +1,5 @@
 using FluentAssertions;
-using Mc2.CrudTest.Domain.ValueObjects;
+using Mc2.CrudTest.Domain.Customers.ValueObjects;
 
 namespace Mc2.CrudTest.UnitTests.Domain.ValueObjects
 {

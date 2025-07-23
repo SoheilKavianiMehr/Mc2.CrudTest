@@ -133,7 +133,7 @@ namespace Mc2.CrudTest.AcceptanceTests.Features
                             "+989383623312"});
                 table1.AddRow(new string[] {
                             "BankAccountNumber",
-                            "12345678901234567890"});
+                            "1234567890123456789"});
 #line 10
     testRunner.Given("I have valid customer information:", ((string)(null)), table1, "Given ");
 #line hidden
@@ -194,7 +194,7 @@ namespace Mc2.CrudTest.AcceptanceTests.Features
                             "+989383623312"});
                 table2.AddRow(new string[] {
                             "BankAccountNumber",
-                            "12345678901234567890"});
+                            "1234567890123456789"});
 #line 24
     testRunner.Given("a customer exists with:", ((string)(null)), table2, "Given ");
 #line hidden
@@ -218,7 +218,7 @@ namespace Mc2.CrudTest.AcceptanceTests.Features
                             "+989383623312"});
                 table3.AddRow(new string[] {
                             "BankAccountNumber",
-                            "12345678901234567890"});
+                            "1234567890123456789"});
 #line 32
     testRunner.When("I try to create another customer with:", ((string)(null)), table3, "When ");
 #line hidden
@@ -273,7 +273,7 @@ namespace Mc2.CrudTest.AcceptanceTests.Features
                             "+989383623312"});
                 table4.AddRow(new string[] {
                             "BankAccountNumber",
-                            "12345678901234567890"});
+                            "1234567890123456789"});
 #line 44
     testRunner.Given("a customer exists with:", ((string)(null)), table4, "Given ");
 #line hidden
@@ -297,7 +297,7 @@ namespace Mc2.CrudTest.AcceptanceTests.Features
                             "+989383623312"});
                 table5.AddRow(new string[] {
                             "BankAccountNumber",
-                            "12345678901234567890"});
+                            "1234567890123456789"});
 #line 52
     testRunner.When("I try to create another customer with:", ((string)(null)), table5, "When ");
 #line hidden
@@ -352,7 +352,7 @@ namespace Mc2.CrudTest.AcceptanceTests.Features
                             "+989383623312"});
                 table6.AddRow(new string[] {
                             "BankAccountNumber",
-                            "12345678901234567890"});
+                            "123456789012345678"});
 #line 64
     testRunner.Given("I have customer information with invalid email:", ((string)(null)), table6, "Given ");
 #line hidden
@@ -410,7 +410,7 @@ namespace Mc2.CrudTest.AcceptanceTests.Features
                             "123"});
                 table7.AddRow(new string[] {
                             "BankAccountNumber",
-                            "12345678901234567890"});
+                            "1234567890123456789"});
 #line 77
     testRunner.Given("I have customer information with invalid phone:", ((string)(null)), table7, "Given ");
 #line hidden
@@ -468,7 +468,7 @@ namespace Mc2.CrudTest.AcceptanceTests.Features
                             "+989383623312"});
                 table8.AddRow(new string[] {
                             "BankAccountNumber",
-                            "12345678901234567890"});
+                            "1234567890123456789"});
 #line 90
     testRunner.Given("I have customer information with underage person:", ((string)(null)), table8, "Given ");
 #line hidden
@@ -529,7 +529,7 @@ namespace Mc2.CrudTest.AcceptanceTests.Features
                             "+989383623312"});
                 table9.AddRow(new string[] {
                             "BankAccountNumber",
-                            "12345678901234567890"});
+                            "1234567890123456789"});
 #line 104
     testRunner.When("I update the customer with:", ((string)(null)), table9, "When ");
 #line hidden

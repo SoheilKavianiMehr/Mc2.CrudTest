@@ -1,9 +1,12 @@
 using FluentAssertions;
-using Mc2.CrudTest.Application.Commands;
-using Mc2.CrudTest.Application.Common;
-using Mc2.CrudTest.Application.DTOs;
-using Mc2.CrudTest.Application.Queries;
-using Mc2.CrudTest.Domain.Repositories;
+using Mc2.CrudTest.Application.Basic.Common;
+using Mc2.CrudTest.Application.Customers.Commands.CreateCustomer;
+using Mc2.CrudTest.Application.Customers.Commands.DeleteCustomer;
+using Mc2.CrudTest.Application.Customers.Commands.UpdateCustomer;
+using Mc2.CrudTest.Application.Customers.Queries.GetCustomerByEmail;
+using Mc2.CrudTest.Application.Customers.Queries.GetCustomers;
+using Mc2.CrudTest.Domain.Customers;
+using Mc2.CrudTest.Infrastructure.Data;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using TechTalk.SpecFlow;
@@ -43,12 +46,10 @@ namespace Mc2.CrudTest.AcceptanceTests.StepDefinitions
         [Given(@"the database is clean")]
         public async Task GivenTheDatabaseIsClean()
         {
-            var allCustomers = await _customerRepository.GetAllAsync();
-            foreach (var customer in allCustomers)
-            {
-                await _customerRepository.DeleteAsync(customer);
-            }
-            await _customerRepository.SaveChangesAsync();
+            // Use a more reliable approach to clean the database
+            var context = _serviceProvider.GetRequiredService<ApplicationDbContext>();
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
 
         [Given(@"I have valid customer information:")]
@@ -137,7 +138,7 @@ namespace Mc2.CrudTest.AcceptanceTests.StepDefinitions
                 LastName = "Customer",
                 DateOfBirth = new DateTime(1990, 1, 1),
                 Email = "test@example.com",
-                PhoneNumber = "+1234567890",
+                PhoneNumber = "+989383623312",
                 BankAccountNumber = "12345678901234567890"
             };
             
@@ -154,7 +155,7 @@ namespace Mc2.CrudTest.AcceptanceTests.StepDefinitions
                 LastName = "Customer",
                 DateOfBirth = new DateTime(1990, 1, 1),
                 Email = email,
-                PhoneNumber = "+1234567890",
+                PhoneNumber = "+989383623313",
                 BankAccountNumber = "12345678901234567890"
             };
             
@@ -166,13 +167,14 @@ namespace Mc2.CrudTest.AcceptanceTests.StepDefinitions
         {
             for (int i = 1; i <= customerCount; i++)
             {
+                var phoneNumber = $"+9893836233" + (i.ToString().Length == 1 ? "1"+i.ToString() : i.ToString());
                 var command = new CreateCustomerCommand
                 {
                     FirstName = $"Customer{i}",
                     LastName = $"LastName{i}",
                     DateOfBirth = new DateTime(1990, 1, i % 28 + 1),
                     Email = $"customer{i}@example.com",
-                    PhoneNumber = $"+123456789{i:D1}",
+                    PhoneNumber = phoneNumber,
                     BankAccountNumber = $"12345678{i:D10}"
                 };
                 

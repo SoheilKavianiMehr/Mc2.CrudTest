@@ -1,7 +1,7 @@
 using FluentAssertions;
-using Mc2.CrudTest.Domain.Entities;
-using Mc2.CrudTest.Domain.Events;
-using Mc2.CrudTest.Domain.ValueObjects;
+using Mc2.CrudTest.Domain.Customers.Entities;
+using Mc2.CrudTest.Domain.Customers.Events;
+using Mc2.CrudTest.Domain.Customers.ValueObjects;
 
 namespace Mc2.CrudTest.UnitTests.Domain.Entities
 {
@@ -33,7 +33,6 @@ namespace Mc2.CrudTest.UnitTests.Domain.Entities
             customer.Email.Should().Be(_validEmail);
             customer.PhoneNumber.Should().Be(_validPhoneNumber);
             customer.BankAccountNumber.Should().Be(_validBankAccountNumber);
-            customer.IsDeleted.Should().BeFalse();
             
             customer.DomainEvents.Should().HaveCount(1);
             customer.DomainEvents.First().Should().BeOfType<CustomerCreatedEvent>();
@@ -170,7 +169,7 @@ namespace Mc2.CrudTest.UnitTests.Domain.Entities
         }
 
         [Fact]
-        public void Delete_ShouldMarkAsDeletedAndRaiseEvent()
+        public void Delete_ShouldRaiseEvent()
         {
             var customer = Customer.Create(
                 _validFirstName,
@@ -183,8 +182,6 @@ namespace Mc2.CrudTest.UnitTests.Domain.Entities
             customer.ClearDomainEvents();
 
             customer.Delete();
-
-            customer.IsDeleted.Should().BeTrue();
             
             customer.DomainEvents.Should().HaveCount(1);
             customer.DomainEvents.First().Should().BeOfType<CustomerDeletedEvent>();

@@ -14,7 +14,7 @@ Feature: Customer Management
       | DateOfBirth      | 2000-01-15               |
       | Email            | soheil79km@hotmail.com   |
       | PhoneNumber      | +989383623312            |
-      | BankAccountNumber| 12345678901234567890     |
+      | BankAccountNumber| 1234567890123456789     |
     When I create a new customer
     Then the customer should be created successfully
     And the customer should have a unique ID
@@ -28,7 +28,7 @@ Feature: Customer Management
       | DateOfBirth      | 2000-01-15               |
       | Email            | soheil79km@hotmail.com   |
       | PhoneNumber      | +989383623312            |
-      | BankAccountNumber| 12345678901234567890     |
+      | BankAccountNumber| 1234567890123456789      |
     When I try to create another customer with:
       | Field            | Value                    |
       | FirstName        | soheil                   |
@@ -36,7 +36,7 @@ Feature: Customer Management
       | DateOfBirth      | 2000-01-15               |
       | Email            | soheil79km@hotmail.com   |
       | PhoneNumber      | +989383623312            |
-      | BankAccountNumber| 12345678901234567890     |
+      | BankAccountNumber| 1234567890123456789      |
     Then the customer creation should fail
     And I should receive an error
 
@@ -48,7 +48,7 @@ Feature: Customer Management
       | DateOfBirth      | 2000-01-15               |
       | Email            | soheil79km@hotmail.com   |
       | PhoneNumber      | +989383623312            |
-      | BankAccountNumber| 12345678901234567890     |
+      | BankAccountNumber| 1234567890123456789     |
     When I try to create another customer with:
       | Field            | Value                    |
       | FirstName        | ali                      |
@@ -56,7 +56,7 @@ Feature: Customer Management
       | DateOfBirth      | 2001-01-15               |
       | Email            | soheil79km@hotmail.com   |
       | PhoneNumber      | +989383623312            |
-      | BankAccountNumber| 12345678901234567890     |
+      | BankAccountNumber| 1234567890123456789      |
     Then the customer creation should fail
     And I should receive an error
 
@@ -68,7 +68,7 @@ Feature: Customer Management
       | DateOfBirth      | 2000-01-15               |
       | Email            | invalid-email            |
       | PhoneNumber      | +989383623312            |
-      | BankAccountNumber| 12345678901234567890     |
+      | BankAccountNumber| 123456789012345678       |
     When I try to create a new customer
     Then the customer creation should fail
     And I should receive an email validation error
@@ -81,7 +81,7 @@ Feature: Customer Management
       | DateOfBirth      | 2000-01-15               |
       | Email            | soheil79km@hotmail.com   |
       | PhoneNumber      | 123                      |
-      | BankAccountNumber| 12345678901234567890     |
+      | BankAccountNumber| 1234567890123456789      |
     When I try to create a new customer
     Then the customer creation should fail
     And I should receive a phone validation error
@@ -94,7 +94,7 @@ Feature: Customer Management
       | DateOfBirth      | 2010-01-01               |
       | Email            | soheil79km@hotmail.com   |
       | PhoneNumber      | +989383623312            |
-      | BankAccountNumber| 12345678901234567890     |
+      | BankAccountNumber| 1234567890123456789      |
     When I try to create a new customer
     Then the customer creation should fail
     And I should receive an age validation error
@@ -108,7 +108,7 @@ Feature: Customer Management
       | DateOfBirth      | 2000-01-01               |
       | Email            | updated@hotmail.com      |
       | PhoneNumber      | +989383623312            |
-      | BankAccountNumber| 12345678901234567890     |
+      | BankAccountNumber| 1234567890123456789      |
     Then the customer should be updated successfully
     And a CustomerUpdatedEvent should be raised
 
