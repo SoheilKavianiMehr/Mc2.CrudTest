@@ -1,4 +1,4 @@
-namespace Mc2.CrudTest.Application.DTOs
+namespace Mc2.CrudTest.Application.Customers.Queries.GetCustomers
 {
     public class CustomerDto
     {
@@ -9,8 +9,5 @@ namespace Mc2.CrudTest.Application.DTOs
         public string Email { get; set; } = string.Empty;
         public string PhoneNumber { get; set; } = string.Empty;
         public string BankAccountNumber { get; set; } = string.Empty;
-        public DateTime CreatedAt { get; set; }
-        public DateTime? UpdatedAt { get; set; }
-        public bool IsDeleted { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 using MediatR;
-using Mc2.CrudTest.Application.DTOs;
+using Mc2.CrudTest.Application.Customers.Queries.GetCustomers;
 
-namespace Mc2.CrudTest.Application.Queries
+namespace Mc2.CrudTest.Application.Customers.Queries.GetCustomerByEmail
 {
     public class GetCustomerByEmailQuery : IRequest<CustomerDto>
     {

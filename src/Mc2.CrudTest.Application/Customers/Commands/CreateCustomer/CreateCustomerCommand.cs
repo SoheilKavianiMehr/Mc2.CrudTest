@@ -1,7 +1,7 @@
 using MediatR;
-using Mc2.CrudTest.Application.DTOs;
+using Mc2.CrudTest.Application.Customers.Queries.GetCustomers;
 
-namespace Mc2.CrudTest.Application.Commands
+namespace Mc2.CrudTest.Application.Customers.Commands.CreateCustomer
 {
     public class CreateCustomerCommand : IRequest<CustomerDto>
     {

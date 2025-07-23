@@ -1,10 +1,9 @@
 using MediatR;
-using Mc2.CrudTest.Application.Commands;
-using Mc2.CrudTest.Application.DTOs;
-using Mc2.CrudTest.Domain.Entities;
-using Mc2.CrudTest.Domain.Repositories;
+using Mc2.CrudTest.Application.Customers.Queries.GetCustomers;
+using Mc2.CrudTest.Domain.Customers.Entities;
+using Mc2.CrudTest.Domain.Customers;
 
-namespace Mc2.CrudTest.Application.Handlers;
+namespace Mc2.CrudTest.Application.Customers.Commands.CreateCustomer;
 
 public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, CustomerDto>
 {
@@ -17,6 +16,19 @@ public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerComman
 
     public async Task<CustomerDto> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
     {
+        var existingCustomerByEmail = await _customerRepository.GetByEmailAsync(request.Email);
+        if (existingCustomerByEmail != null)
+        {
+            throw new ArgumentException("Email must be unique", nameof(request.Email));
+        }
+
+        var existingCustomerByNameAndDob = await _customerRepository.GetByNameAndDateOfBirthAsync(
+            request.FirstName, request.LastName, request.DateOfBirth);
+        if (existingCustomerByNameAndDob != null)
+        {
+            throw new ArgumentException("Customer with the same first name, last name, and date of birth already exists");
+        }
+
         var customer = Customer.Create(
             request.FirstName,
             request.LastName,
@@ -24,11 +36,6 @@ public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerComman
             request.Email,
             request.PhoneNumber,
             request.BankAccountNumber);
-
-        if (await _customerRepository.IsExist(customer))
-        {
-            throw new ArgumentException("User sould be unique", customer.UniquenessKey);
-        }
 
         var createdCustomer = await _customerRepository.CreateAsync(customer);
 
@@ -40,10 +47,7 @@ public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerComman
             DateOfBirth = createdCustomer.DateOfBirth,
             Email = createdCustomer.Email.Value,
             PhoneNumber = createdCustomer.PhoneNumber.Value,
-            BankAccountNumber = createdCustomer.BankAccountNumber,
-            CreatedAt = createdCustomer.CreatedAt,
-            UpdatedAt = createdCustomer.UpdatedAt,
-            IsDeleted = createdCustomer.IsDeleted
+            BankAccountNumber = createdCustomer.BankAccountNumber
         };
     }
 }

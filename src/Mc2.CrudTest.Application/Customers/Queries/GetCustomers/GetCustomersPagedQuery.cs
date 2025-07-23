@@ -1,8 +1,7 @@
 using MediatR;
-using Mc2.CrudTest.Application.DTOs;
-using Mc2.CrudTest.Application.Common;
+using Mc2.CrudTest.Application.Basic.Common;
 
-namespace Mc2.CrudTest.Application.Queries
+namespace Mc2.CrudTest.Application.Customers.Queries.GetCustomers
 {
     public class GetCustomersPagedQuery : IRequest<PagedResult<CustomerDto>>
     {

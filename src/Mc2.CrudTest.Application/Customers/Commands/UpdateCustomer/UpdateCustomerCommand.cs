@@ -1,10 +1,12 @@
 using MediatR;
-using Mc2.CrudTest.Application.DTOs;
+using System.Text.Json.Serialization;
+using Mc2.CrudTest.Application.Customers.Queries.GetCustomers;
 
-namespace Mc2.CrudTest.Application.Commands
+namespace Mc2.CrudTest.Application.Customers.Commands.UpdateCustomer
 {
     public class UpdateCustomerCommand : IRequest<CustomerDto>
     {
+        [JsonIgnore]
         public Guid Id { get; set; }
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;

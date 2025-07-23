@@ -1,9 +1,8 @@
 using MediatR;
-using Mc2.CrudTest.Application.Commands;
-using Mc2.CrudTest.Application.DTOs;
-using Mc2.CrudTest.Domain.Repositories;
+using Mc2.CrudTest.Application.Customers.Queries.GetCustomers;
+using Mc2.CrudTest.Domain.Customers;
 
-namespace Mc2.CrudTest.Application.Handlers;
+namespace Mc2.CrudTest.Application.Customers.Commands.UpdateCustomer;
 
 public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand, CustomerDto>
 {
@@ -20,6 +19,19 @@ public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerComman
         if (customer == null)
         {
             throw new ArgumentException($"Customer with ID {request.Id} not found.");
+        }
+
+        var existingCustomerByEmail = await _customerRepository.GetByEmailAsync(request.Email);
+        if (existingCustomerByEmail != null && existingCustomerByEmail.Id != request.Id)
+        {
+            throw new ArgumentException("Email must be unique", nameof(request.Email));
+        }
+
+        var existingCustomerByNameAndDob = await _customerRepository.GetByNameAndDateOfBirthAsync(
+            request.FirstName, request.LastName, request.DateOfBirth);
+        if (existingCustomerByNameAndDob != null && existingCustomerByNameAndDob.Id != request.Id)
+        {
+            throw new ArgumentException("Customer with the same first name, last name, and date of birth already exists");
         }
 
         customer.Update(
@@ -40,10 +52,7 @@ public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerComman
             DateOfBirth = updatedCustomer.DateOfBirth,
             Email = updatedCustomer.Email.Value,
             PhoneNumber = updatedCustomer.PhoneNumber.Value,
-            BankAccountNumber = updatedCustomer.BankAccountNumber,
-            CreatedAt = updatedCustomer.CreatedAt,
-            UpdatedAt = updatedCustomer.UpdatedAt,
-            IsDeleted = updatedCustomer.IsDeleted
+            BankAccountNumber = updatedCustomer.BankAccountNumber
         };
     }
 }

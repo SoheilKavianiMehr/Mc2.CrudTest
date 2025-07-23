@@ -1,10 +1,8 @@
 using MediatR;
-using Mc2.CrudTest.Application.Common;
-using Mc2.CrudTest.Application.DTOs;
-using Mc2.CrudTest.Application.Queries;
-using Mc2.CrudTest.Domain.Repositories;
+using Mc2.CrudTest.Application.Basic.Common;
+using Mc2.CrudTest.Domain.Customers;
 
-namespace Mc2.CrudTest.Application.Handlers;
+namespace Mc2.CrudTest.Application.Customers.Queries.GetCustomers;
 
 public class GetCustomersPagedQueryHandler : IRequestHandler<GetCustomersPagedQuery, PagedResult<CustomerDto>>
 {
@@ -27,10 +25,7 @@ public class GetCustomersPagedQueryHandler : IRequestHandler<GetCustomersPagedQu
             DateOfBirth = customer.DateOfBirth,
             Email = customer.Email.Value,
             PhoneNumber = customer.PhoneNumber.Value,
-            BankAccountNumber = customer.BankAccountNumber,
-            CreatedAt = customer.CreatedAt,
-            UpdatedAt = customer.UpdatedAt,
-            IsDeleted = customer.IsDeleted
+            BankAccountNumber = customer.BankAccountNumber
         });
 
         return new PagedResult<CustomerDto>

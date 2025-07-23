@@ -1,4 +1,4 @@
-namespace Mc2.CrudTest.Application.Common
+namespace Mc2.CrudTest.Application.Basic.Common
 {
     public class PagedResult<T>
     {

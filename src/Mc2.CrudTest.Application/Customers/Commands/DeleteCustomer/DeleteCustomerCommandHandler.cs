@@ -1,8 +1,7 @@
 using MediatR;
-using Mc2.CrudTest.Application.Commands;
-using Mc2.CrudTest.Domain.Repositories;
+using Mc2.CrudTest.Domain.Customers;
 
-namespace Mc2.CrudTest.Application.Handlers;
+namespace Mc2.CrudTest.Application.Customers.Commands.DeleteCustomer;
 
 public class DeleteCustomerCommandHandler : IRequestHandler<DeleteCustomerCommand>
 {
