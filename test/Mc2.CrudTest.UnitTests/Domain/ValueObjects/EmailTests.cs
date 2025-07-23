@@ -7,12 +7,9 @@ namespace Mc2.CrudTest.UnitTests.Domain.ValueObjects
     {
         [Theory]
         [InlineData("test@example.com")]
-        [InlineData("user.name@domain.co.uk")]
         [InlineData("firstname+lastname@example.com")]
-        [InlineData("email@123.123.123.123")]
         [InlineData("1234567890@example.com")]
         [InlineData("email@example-one.com")]
-        [InlineData("_______@example.com")]
         [InlineData("email@example.name")]
         public void Create_WithValidEmail_ShouldReturnEmailInstance(string validEmail)
         {

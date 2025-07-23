@@ -17,6 +17,8 @@ public class Customer : BaseEntity
 
     public string UniquenessKey => $"{FirstName.ToLowerInvariant()}|{LastName.ToLowerInvariant()}|{DateOfBirth:yyyy-MM-dd}";
 
+    public int Age => CalculateAge(DateOfBirth);
+
     private Customer() { }
 
     private Customer(
@@ -113,8 +115,7 @@ public class Customer : BaseEntity
         if (dateOfBirth >= DateTime.Today)
             throw new ArgumentException("Date of birth must be in the past.", nameof(dateOfBirth));
 
-        var age = DateTime.Today.Year - dateOfBirth.Year;
-        if (dateOfBirth.Date > DateTime.Today.AddYears(-age)) age--;
+        var age = CalculateAge(dateOfBirth);
 
         if (age < 18)
             throw new ArgumentException("Customer must be at least 18 years old.", nameof(dateOfBirth));
@@ -125,7 +126,22 @@ public class Customer : BaseEntity
         if (string.IsNullOrWhiteSpace(bankAccountNumber))
             throw new ArgumentException("Bank account number cannot be null or empty.", nameof(bankAccountNumber));
 
-        if (bankAccountNumber.Trim().Length < 8 || bankAccountNumber.Trim().Length > 34)
+        if (bankAccountNumber.Trim().Length < 8 || bankAccountNumber.Trim().Length > 20)
             throw new ArgumentException("Bank account number must be between 8 and 34 characters.", nameof(bankAccountNumber));
+
+        if (!bankAccountNumber.All(char.IsDigit))
+            throw new ArgumentException("Bank account number must digits only.", nameof(bankAccountNumber));
+
+    }
+
+    private static int CalculateAge(DateTime birthDate)
+    {
+        var today = DateTime.Today;
+        var age = today.Year - birthDate.Year;
+
+        if (birthDate.Date > today.AddYears(-age))
+            age--;
+
+        return age;
     }
 }

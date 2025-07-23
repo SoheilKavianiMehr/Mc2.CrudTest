@@ -1,5 +1,6 @@
 using FluentAssertions;
 using Mc2.CrudTest.Domain.Entities;
+using Mc2.CrudTest.Domain.Events;
 using Mc2.CrudTest.Domain.ValueObjects;
 
 namespace Mc2.CrudTest.UnitTests.Domain.Entities
@@ -92,7 +93,7 @@ namespace Mc2.CrudTest.UnitTests.Domain.Entities
                 _validBankAccountNumber);
 
             act.Should().Throw<ArgumentException>()
-                .WithMessage("*age*18*");
+                .WithMessage("*at*least*18*");
         }
 
         [Fact]
@@ -109,7 +110,7 @@ namespace Mc2.CrudTest.UnitTests.Domain.Entities
                 _validBankAccountNumber);
 
             act.Should().Throw<ArgumentException>()
-                .WithMessage("*future*");
+                .WithMessage("*must*be*in*the*past*");
         }
 
         [Theory]
@@ -129,7 +130,7 @@ namespace Mc2.CrudTest.UnitTests.Domain.Entities
                 invalidBankAccount);
 
             act.Should().Throw<ArgumentException>()
-                .WithMessage("*bank account*");
+                .WithMessage("*Bank*account*");
         }
 
         [Fact]
@@ -202,9 +203,9 @@ namespace Mc2.CrudTest.UnitTests.Domain.Entities
                 _validPhoneNumber,
                 _validBankAccountNumber);
 
-            var uniquenessKey = customer.GetUniquenessKey();
+            var uniquenessKey = customer.UniquenessKey;
 
-            var expectedKey = $"{_validFirstName.ToLowerInvariant()}_{_validLastName.ToLowerInvariant()}_{_validDateOfBirth:yyyy-MM-dd}";
+            var expectedKey = $"{_validFirstName.ToLowerInvariant()}|{_validLastName.ToLowerInvariant()}|{_validDateOfBirth:yyyy-MM-dd}";
             uniquenessKey.Should().Be(expectedKey);
         }
 

@@ -6,7 +6,7 @@ namespace Mc2.CrudTest.Domain.ValueObjects;
 public class PhoneNumber : IEquatable<PhoneNumber>
 {
     private static readonly Regex MobileRegex = new(
-        @"^(\+?1?[-.\s]?)?\(?([0-9]{3})\)?[-.\s]?([0-9]{3})[-.\s]?([0-9]{4})$|^(\+?[1-9]\d{1,14})$",
+        @"^\+(\d[\d\s\-\.\(\)]{6,14}\d)$",
         RegexOptions.Compiled);
 
     public string Value { get; private set; }
@@ -19,12 +19,12 @@ public class PhoneNumber : IEquatable<PhoneNumber>
     public static PhoneNumber Create(string phoneNumber)
     {
         if (string.IsNullOrWhiteSpace(phoneNumber))
-            throw new ArgumentException("Phone number cannot be null or empty.", nameof(phoneNumber));
+            throw new ArgumentNullException("Mobile phone number cannot be null or empty.", nameof(phoneNumber));
 
         var cleanedNumber = Regex.Replace(phoneNumber.Trim(), @"[^\d+]", "");
 
         if (!MobileRegex.IsMatch(phoneNumber.Trim()))
-            throw new ArgumentException("Invalid mobile phone number format. Only mobile numbers are allowed.", nameof(phoneNumber));
+            throw new ArgumentException("Invalid Mobile phone number format. Only mobile numbers are allowed.", nameof(phoneNumber));
 
         var digitsOnly = Regex.Replace(cleanedNumber, @"[^\d]", "");
         if (digitsOnly.Length < 7 || digitsOnly.Length > 15)

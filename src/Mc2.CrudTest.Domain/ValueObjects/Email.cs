@@ -5,7 +5,7 @@ namespace Mc2.CrudTest.Domain.ValueObjects;
 public class Email : IEquatable<Email>
 {
     private static readonly Regex EmailRegex = new(
-        @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
+        @"^(?!.*\.\.)[a-zA-Z0-9]+([._+-][a-zA-Z0-9]+)*@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$",
         RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
     public string Value { get; private set; }
@@ -18,7 +18,7 @@ public class Email : IEquatable<Email>
     public static Email Create(string email)
     {
         if (string.IsNullOrWhiteSpace(email))
-            throw new ArgumentException("Email cannot be null or empty.", nameof(email));
+            throw new ArgumentNullException("Email cannot be null or empty.", nameof(email));
 
         email = email.Trim().ToLowerInvariant();
 
