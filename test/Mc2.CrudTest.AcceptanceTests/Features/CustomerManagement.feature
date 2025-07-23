@@ -93,7 +93,7 @@ Feature: Customer Management
       | LastName         | km                       |
       | DateOfBirth      | 2010-01-01               |
       | Email            | soheil79km@hotmail.com   |
-      | PhoneNumber      | +989383623312            |
+      | PhoneNumber      | +989383623312            | 
       | BankAccountNumber| 1234567890123456789      |
     When I try to create a new customer
     Then the customer creation should fail
