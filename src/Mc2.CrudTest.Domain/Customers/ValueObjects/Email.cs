@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Mc2.CrudTest.Domain.ValueObjects;
+namespace Mc2.CrudTest.Domain.Customers.ValueObjects;
 
 public class Email : IEquatable<Email>
 {

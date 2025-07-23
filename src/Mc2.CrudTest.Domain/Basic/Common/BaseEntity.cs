@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Mc2.CrudTest.Domain.Common;
+namespace Mc2.CrudTest.Domain.Basic.Common;
 
 public abstract class BaseEntity
 {
@@ -11,7 +11,7 @@ public abstract class BaseEntity
     public DateTime CreatedAt { get; protected set; } = DateTime.UtcNow;
     public DateTime? UpdatedAt { get; protected set; }
     public bool IsDeleted { get; protected set; }
-    
+
     private readonly List<IDomainEvent> _domainEvents = new();
     public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
 

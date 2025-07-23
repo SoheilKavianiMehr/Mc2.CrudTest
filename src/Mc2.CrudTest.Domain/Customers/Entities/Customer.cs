@@ -1,10 +1,10 @@
-﻿using Mc2.CrudTest.Domain.Common;
-using Mc2.CrudTest.Domain.Events;
-using Mc2.CrudTest.Domain.ValueObjects;
+﻿using Mc2.CrudTest.Domain.Basic.Common;
+using Mc2.CrudTest.Domain.Customers.Events;
+using Mc2.CrudTest.Domain.Customers.ValueObjects;
 
-namespace Mc2.CrudTest.Domain.Entities;
+namespace Mc2.CrudTest.Domain.Customers.Entities;
 
-public class Customer : BaseEntity
+public class Customer : AggregateRoot
 {
     public string FirstName { get; private set; } = string.Empty;
     public string LastName { get; private set; } = string.Empty;
@@ -12,6 +12,7 @@ public class Customer : BaseEntity
     public Email Email { get; private set; } = null!;
     public PhoneNumber PhoneNumber { get; private set; } = null!;
     public string BankAccountNumber { get; private set; } = string.Empty;
+    public bool IsDeleted { get; private set; }
 
     public string FullName => $"{FirstName} {LastName}";
 
@@ -19,7 +20,37 @@ public class Customer : BaseEntity
 
     public int Age => CalculateAge(DateOfBirth);
 
-    private Customer() { }
+    public Customer() { }
+
+    public static Customer FromReadModel(
+        Guid id,
+        string firstName,
+        string lastName,
+        DateTime dateOfBirth,
+        string email,
+        string phoneNumber,
+        string bankAccountNumber,
+        int version,
+        bool isDeleted = false)
+    {
+        var emailValueObject = Email.Create(email);
+        var phoneNumberValueObject = PhoneNumber.Create(phoneNumber);
+
+        var customer = new Customer
+        {
+            Id = id,
+            FirstName = firstName.Trim(),
+            LastName = lastName.Trim(),
+            DateOfBirth = dateOfBirth,
+            Email = emailValueObject,
+            PhoneNumber = phoneNumberValueObject,
+            BankAccountNumber = bankAccountNumber.Trim(),
+            Version = version,
+            IsDeleted = isDeleted
+        };
+
+        return customer;
+    }
 
     private Customer(
         string firstName,
@@ -31,6 +62,7 @@ public class Customer : BaseEntity
     {
         ValidateCustomerData(firstName, lastName, dateOfBirth, bankAccountNumber);
 
+        Id = Guid.NewGuid();
         FirstName = firstName.Trim();
         LastName = lastName.Trim();
         DateOfBirth = dateOfBirth;
@@ -38,7 +70,7 @@ public class Customer : BaseEntity
         PhoneNumber = phoneNumber;
         BankAccountNumber = bankAccountNumber.Trim();
 
-        AddDomainEvent(new CustomerCreatedEvent(Id, FullName, Email.Value));
+        ApplyEvent(new CustomerCreatedEvent(Id, FirstName, LastName, DateOfBirth, PhoneNumber.Value, Email.Value, BankAccountNumber));
     }
 
     public static Customer Create(
@@ -84,14 +116,12 @@ public class Customer : BaseEntity
         PhoneNumber = phoneNumberValueObject;
         BankAccountNumber = bankAccountNumber.Trim();
 
-        MarkAsUpdated();
-        AddDomainEvent(new CustomerUpdatedEvent(Id, oldFullName, FullName, oldEmail, Email.Value));
+        ApplyEvent(new CustomerUpdatedEvent(Id, FirstName, LastName, DateOfBirth, PhoneNumber.Value, Email.Value, BankAccountNumber));
     }
 
     public void Delete()
     {
-        MarkAsDeleted();
-        AddDomainEvent(new CustomerDeletedEvent(Id, FullName, Email.Value));
+        ApplyEvent(new CustomerDeletedEvent(Id));
     }
 
     private static void ValidateCustomerData(
@@ -143,5 +173,31 @@ public class Customer : BaseEntity
             age--;
 
         return age;
+    }
+
+    public void Apply(CustomerCreatedEvent @event)
+    {
+        Id = @event.CustomerId;
+        FirstName = @event.FirstName;
+        LastName = @event.LastName;
+        DateOfBirth = @event.DateOfBirth;
+        PhoneNumber = PhoneNumber.Create(@event.PhoneNumber);
+        Email = Email.Create(@event.Email);
+        BankAccountNumber = @event.BankAccountNumber;
+    }
+
+    public void Apply(CustomerUpdatedEvent @event)
+    {
+        FirstName = @event.FirstName;
+        LastName = @event.LastName;
+        DateOfBirth = @event.DateOfBirth;
+        PhoneNumber = PhoneNumber.Create(@event.PhoneNumber);
+        Email = Email.Create(@event.Email);
+        BankAccountNumber = @event.BankAccountNumber;
+    }
+
+    public void Apply(CustomerDeletedEvent @event)
+    {
+        IsDeleted = true;
     }
 }

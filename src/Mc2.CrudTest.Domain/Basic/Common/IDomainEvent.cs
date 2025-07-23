@@ -1,6 +1,6 @@
 using System;
 
-namespace Mc2.CrudTest.Domain.Common;
+namespace Mc2.CrudTest.Domain.Basic.Common;
 
 public interface IDomainEvent
 {
