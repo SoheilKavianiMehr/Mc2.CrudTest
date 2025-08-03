@@ -1,4 +1,4 @@
-# 🏢 Customer Management System - Clean Architecture CRUD Application
+# 🏗️ .NET Clean Architecture CRUD Application
 
 [![.NET](https://img.shields.io/badge/.NET-8.0-blue.svg)](https://dotnet.microsoft.com/download/dotnet/8.0)
 [![Entity Framework Core](https://img.shields.io/badge/Entity%20Framework%20Core-8.0-green.svg)](https://docs.microsoft.com/en-us/ef/core/)
@@ -8,9 +8,9 @@
 
 ## 📋 Project Overview
 
-This is a **real-world Customer Management System** built using **Clean Architecture** principles with **.NET 8**. The application demonstrates modern software development practices including **Domain-Driven Design (DDD)**, **CQRS pattern**, **Test-Driven Development (TDD)**, and **Behavior-Driven Development (BDD)**.
+This is a **comprehensive .NET Clean Architecture CRUD application** built with **.NET 8** that demonstrates modern software development practices. The project showcases **Clean Architecture** principles, **Domain-Driven Design (DDD)**, **CQRS pattern**, **Test-Driven Development (TDD)**, and **Behavior-Driven Development (BDD)**.
 
-The system provides a complete CRUD (Create, Read, Update, Delete) API for managing customer information with robust validation, domain events, and comprehensive testing coverage.
+The application provides a complete **Customer Management System** with full CRUD (Create, Read, Update, Delete) operations, robust validation, domain events, and comprehensive testing coverage - perfect for learning Clean Architecture patterns in .NET.
 
 ## ✨ Features
 
