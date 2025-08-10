@@ -313,6 +313,10 @@ This project is under **active development**. Planned features include:
 - **Health Checks** - Application health monitoring endpoints
 - **Integration Tests** - Comprehensive API testing suite
 
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
 ## 📞 Contact
 
 **Project Maintainer**: Soheil Kaviani Mehr
